@@ -1,0 +1,140 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+      "title": "ML Prediction API",
+      "version": "1.0.0",
+      "description": "Bu API, ürün satın alma tahmin modeli sunar ve yeniden eğitme, satış özetleme gibi işlemler için endpointler içerir."
+    },
+    "paths": {
+      "/": {
+        "get": {
+          "summary": "Ana Sayfa",
+          "description": "API'nin çalıştığını kontrol etmek için basit bir endpoint.",
+          "responses": {
+            "200": {
+              "description": "Başarılı",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "message": "Hello, World!"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/products": {
+        "get": {
+          "summary": "Ürünleri getir",
+          "description": "JSON dosyasındaki ürün listesini döner.",
+          "responses": {
+            "200": {
+              "description": "Ürün listesi",
+              "content": {
+                "application/json": {
+                  "example": [
+                    {
+                      "id": 1,
+                      "name": "Ürün A"
+                    },
+                    {
+                      "id": 2,
+                      "name": "Ürün B"
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      },
+      "/predict": {
+        "post": {
+          "summary": "Ürün satın alımını tahmin et",
+          "description": "Müşteri, ürün ve ay bilgisine göre satın alım tahmini yapar.",
+          "requestBody": {
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "customer_id": {
+                      "type": "string"
+                    },
+                    "product_id": {
+                      "type": "integer"
+                    },
+                    "order_month": {
+                      "type": "integer"
+                    }
+                  },
+                  "required": ["customer_id", "product_id", "order_month"]
+                },
+                "example": {
+                  "customer_id": "C123",
+                  "product_id": 101,
+                  "order_month": 5
+                }
+              }
+            }
+          },
+          "responses": {
+            "200": {
+              "description": "Tahmin sonucu",
+              "content": {
+                "application/json": {
+                  "example": "Will buy"
+                }
+              }
+            },
+            "500": {
+              "description": "Hata"
+            }
+          }
+        }
+      },
+      "/retrain": {
+        "post": {
+          "summary": "Modeli yeniden eğit",
+          "description": "Verilere göre modeli yeniden eğitir.",
+          "responses": {
+            "200": {
+              "description": "Eğitim başarılı",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "message": "Model retrained successfully."
+                  }
+                }
+              }
+            },
+            "500": {
+              "description": "Hata"
+            }
+          }
+        }
+      },
+      "/sales_summary": {
+        "get": {
+          "summary": "Satış özeti getir",
+          "description": "Toplam satışları ve en çok satılan ürünü döner.",
+          "responses": {
+            "200": {
+              "description": "Başarılı yanıt",
+              "content": {
+                "application/json": {
+                  "example": {
+                    "total_sales": 12345,
+                    "most_sold_product": "Product X"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  
