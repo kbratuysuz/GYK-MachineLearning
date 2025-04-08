@@ -3,7 +3,7 @@
   "info": {
     "version": "1.0.1",
     "title": "ML Prediction API",
-    "description": "API for machine learning model predictions and related services"
+    "description": "This API provides predictive analytics for customer purchasing behavior in the Northwind database, allowing businesses to forecast whether specific customers will purchase particular products in given months. Using an XGBoost machine learning model trained on historical transaction data, it delivers accurate purchase predictions through a simple RESTful interface, while also offering product information, category listings, and sales summaries to support business intelligence needs."
   },
   "servers": [
     {
