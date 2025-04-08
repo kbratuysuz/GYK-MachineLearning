@@ -197,5 +197,3 @@ That's it! The application is now running in a container with all dependencies i
 ### First Tree in XGBoost Model
 ![WhatsApp Image 2025-04-08 at 14 15 40 (1)](https://github.com/user-attachments/assets/cda921a4-9480-473b-a96e-f34eec3e7729)
 
-### Classification Report
-![WhatsApp Image 2025-04-08 at 14 15 40 (3)](https://github.com/user-attachments/assets/b78fe2ed-355e-473a-bc04-b1e1052f0150)
