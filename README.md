@@ -184,8 +184,6 @@ docker run -p 8000:8000 brcnacar/pair1
 
 This will start the API service on port 8000. You can access it at http://localhost:8000.
 
-That's it! The application is now running in a container with all dependencies included.
-
 ## Model Performance
 
 ### Feature Importance
