@@ -1,0 +1,195 @@
+/* ReDoc özelleştirmeleri için ana stiller */
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Montserrat', sans-serif;
+  color: #333333;
+}
+
+/* Hepsiburada renk paleti */
+:root {
+  --primary-color: #ff6000; /* Turuncu renk - Hepsiburada'nın ana rengi */
+  --secondary-color: #484848; /* Koyu gri */
+  --background-color: #f5f5f5; /* Açık gri arka plan */
+  --text-color: #333333; /* Metin rengi */
+  --header-bg-color: #ffffff; /* Başlık arka plan rengi */
+  --method-get-color: #00aa13; /* GET metodu rengi - yeşil */
+  --method-post-color: #9013fe; /* POST metodu rengi - mor */
+  --method-put-color: #0070dd; /* PUT metodu rengi - mavi */
+  --method-delete-color: #e53935; /* DELETE metodu rengi - kırmızı */
+}
+
+/* Özel header */
+.custom-header {
+  background-color: white;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  padding: 15px 40px;
+  display: flex;
+  align-items: center;
+  z-index: 100;
+  position: relative;
+}
+
+.custom-header img {
+  height: 40px;
+}
+
+.custom-header h1 {
+  margin-left: 20px;
+  font-size: 1.5em;
+  color: var(--primary-color);
+  font-weight: 600;
+}
+
+.header-right {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+}
+
+.header-button {
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  margin-left: 15px;
+  font-weight: 500;
+  cursor: pointer;
+  font-family: 'Montserrat', sans-serif;
+  transition: background-color 0.2s;
+}
+
+.header-button:hover {
+  background-color: #e55600;
+}
+
+/* Ana navigasyon */
+.menu-content {
+  padding-top: 20px !important;
+}
+
+.menu-content label {
+  text-transform: uppercase !important;
+  font-size: 0.85em !important;
+  color: var(--secondary-color) !important;
+  font-weight: 600 !important;
+}
+
+.menu-content li > label {
+  margin-top: 15px !important;
+}
+
+.menu-content a {
+  font-size: 0.9em !important;
+  color: #666 !important;
+}
+
+.menu-content li[data-item-id] > label {
+  text-transform: none !important;
+}
+
+.menu-content a.active {
+  color: var(--primary-color) !important;
+  font-weight: 600 !important;
+}
+
+/* HTTP metod renklerini düzenleme */
+span[type="get"], [data-method="get"] {
+  background-color: var(--method-get-color) !important;
+}
+
+span[type="post"], [data-method="post"] {
+  background-color: var(--method-post-color) !important;
+}
+
+span[type="put"], [data-method="put"], 
+span[type="patch"], [data-method="patch"] {
+  background-color: var(--method-put-color) !important;
+}
+
+span[type="delete"], [data-method="delete"] {
+  background-color: var(--method-delete-color) !important;
+}
+
+/* Endpoint stilleri */
+[data-section-id] {
+  margin-bottom: 30px !important;
+  padding-bottom: 20px !important;
+  border-bottom: 1px solid #e0e0e0 !important;
+}
+
+h2[data-section-id] {
+  color: var(--primary-color) !important;
+  font-weight: 600 !important;
+  margin-top: 40px !important;
+}
+
+h3 {
+  font-weight: 500 !important;
+  color: #333 !important;
+}
+
+/* Yanıt bölümleri */
+[data-section-id^="operation/"] div[data-tab] {
+  background-color: #f9f9f9 !important;
+  border-radius: 4px !important;
+  padding: 15px !important;
+  margin-top: 15px !important;
+}
+
+[data-section-id^="operation/"] div[data-tab] h3 {
+  color: #333 !important;
+  font-size: 0.9em !important;
+  margin-top: 0 !important;
+}
+
+/* Kod blokları */
+pre {
+  background-color: #263238 !important;
+  border-radius: 4px !important;
+  margin: 15px 0 !important;
+}
+
+code {
+  font-family: 'Roboto Mono', monospace !important;
+  font-size: 13px !important;
+}
+
+/* Özel örnekler bölümü */
+.examples {
+  background-color: #f5f5f5;
+  padding: 15px;
+  border-radius: 4px;
+  margin: 15px 0;
+}
+
+.examples h4 {
+  margin-top: 0;
+  color: var(--primary-color);
+}
+
+/* Responsive düzenlemeler */
+@media (max-width: 768px) {
+  .custom-header {
+    flex-direction: column;
+    padding: 15px;
+    text-align: center;
+  }
+  
+  .custom-header h1 {
+    margin: 10px 0;
+  }
+  
+  .header-right {
+    margin: 10px 0 0 0;
+  }
+}
+
+/* Scroll bar özelleştirmeleri */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-
