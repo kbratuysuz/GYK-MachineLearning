@@ -166,8 +166,14 @@ Or you can access the detailed API Reference at: https://kbratuysuz.github.io/GY
 
 ## Model Performance
 
-The model has shown the following performance on the unbalanced dataset:
+### Feature Importance
+![WhatsApp Image 2025-04-08 at 14 15 40](https://github.com/user-attachments/assets/dcc5932b-4101-45c1-a584-b7855de18439)
 
-- ROC AUC Score: ~0.94
-- Average Precision Score: ~0.8
-- F1-Score: ~0.75
+### ROC Curve
+![WhatsApp Image 2025-04-08 at 14 15 40 (2)](https://github.com/user-attachments/assets/d623b260-8c68-47d6-9a60-d1ac0767894e)
+
+### First Tree in XGBoost Model
+![WhatsApp Image 2025-04-08 at 14 15 40 (1)](https://github.com/user-attachments/assets/cda921a4-9480-473b-a96e-f34eec3e7729)
+
+### Classification Report
+![WhatsApp Image 2025-04-08 at 14 15 40 (3)](https://github.com/user-attachments/assets/b78fe2ed-355e-473a-bc04-b1e1052f0150)
