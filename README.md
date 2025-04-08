@@ -118,7 +118,7 @@ After the first run, revert the changes:
 1. Comment out the parameter optimization section
 2. Uncomment the model loading line:
 ```python
-# Load the model later (ikinci çalıştırmada)
+# Load the model later 
 model = joblib.load('model.joblib')
 ```
 
@@ -163,6 +163,28 @@ Or you can access the detailed API Reference at: https://kbratuysuz.github.io/GY
   "order_month": 3
 }
 ```
+
+## Docker Support
+
+The application is available as a Docker container on Docker Hub. This is the easiest way to run the application without installing any dependencies.
+
+### Running with Docker
+
+1. Pull the Docker image from Docker Hub:
+
+```bash
+docker pull brcnacar/pair1
+```
+
+2. Run the Docker container:
+
+```bash
+docker run -p 8000:8000 brcnacar/pair1
+```
+
+This will start the API service on port 8000. You can access it at http://localhost:8000.
+
+That's it! The application is now running in a container with all dependencies included.
 
 ## Model Performance
 
