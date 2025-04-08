@@ -1,134 +1,277 @@
 {
-    "openapi": "3.0.0",
-    "info": {
-      "title": "ML Prediction API",
-      "version": "1.0.0",
-      "description": "Bu API, ürün satın alma tahmin modeli sunar ve yeniden eğitme, satış özetleme gibi işlemler için endpointler içerir."
+  "openapi": "3.0.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "API Dokümantasyonu",
+    "description": "API ve servisler ile ilgili tüm detaylar",
+    "contact": {
+      "name": "API Destek",
+      "email": "api-destek@example.com"
     },
-    "paths": {
-      "/": {
-        "get": {
-          "summary": "Ana Sayfa",
-          "description": "API'nin çalıştığını kontrol etmek için basit bir endpoint.",
-          "responses": {
-            "200": {
-              "description": "Başarılı",
-              "content": {
-                "application/json": {
-                  "example": {
-                    "message": "Hello, World!"
-                  }
-                }
-              }
+    "x-logo": {
+      "url": "logo.png",
+      "altText": "Logo"
+    }
+  },
+  "servers": [
+    {
+      "url": "https://api.example.com/v1",
+      "description": "Production API Server"
+    },
+    {
+      "url": "https://sandbox-api.example.com/v1",
+      "description": "Sandbox API Server"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Katalog",
+      "description": "Katalog ile ilgili API endpointleri"
+    },
+    {
+      "name": "Sipariş",
+      "description": "Sipariş ile ilgili API endpointleri"
+    }
+  ],
+  "paths": {
+    "/katalog/urunler": {
+      "get": {
+        "tags": ["Katalog"],
+        "summary": "Ürün Listesi",
+        "description": "Tüm ürünlerin listesini getirir",
+        "operationId": "getProducts",
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "Sayfa başına gösterilecek öğe sayısı",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 20,
+              "minimum": 1,
+              "maximum": 100
+            }
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "description": "Sayfalama için başlangıç indeksi",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 0,
+              "minimum": 0
             }
           }
-        }
-      },
-      "/products": {
-        "get": {
-          "summary": "Ürünleri getir",
-          "description": "JSON dosyasındaki ürün listesini döner.",
-          "responses": {
-            "200": {
-              "description": "Ürün listesi",
-              "content": {
-                "application/json": {
-                  "example": [
-                    {
-                      "id": 1,
-                      "name": "Ürün A"
-                    },
-                    {
-                      "id": 2,
-                      "name": "Ürün B"
-                    }
-                  ]
-                }
-              }
-            }
-          }
-        }
-      },
-      "/predict": {
-        "post": {
-          "summary": "Ürün satın alımını tahmin et",
-          "description": "Müşteri, ürün ve ay bilgisine göre satın alım tahmini yapar.",
-          "requestBody": {
-            "required": true,
+        ],
+        "responses": {
+          "200": {
+            "description": "Başarılı yanıt",
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object",
-                  "properties": {
-                    "customer_id": {
-                      "type": "string"
-                    },
-                    "product_id": {
-                      "type": "integer"
-                    },
-                    "order_month": {
-                      "type": "integer"
-                    }
-                  },
-                  "required": ["customer_id", "product_id", "order_month"]
-                },
-                "example": {
-                  "customer_id": "C123",
-                  "product_id": 101,
-                  "order_month": 5
+                  "$ref": "#/components/schemas/ProductList"
                 }
               }
             }
           },
-          "responses": {
-            "200": {
-              "description": "Tahmin sonucu",
-              "content": {
-                "application/json": {
-                  "example": "Will buy"
+          "400": {
+            "description": "Geçersiz istek",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
                 }
               }
-            },
-            "500": {
-              "description": "Hata"
+            }
+          },
+          "401": {
+            "description": "Yetkilendirme hatası",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
             }
           }
         }
       },
-      "/retrain": {
-        "post": {
-          "summary": "Modeli yeniden eğit",
-          "description": "Verilere göre modeli yeniden eğitir.",
-          "responses": {
-            "200": {
-              "description": "Eğitim başarılı",
-              "content": {
-                "application/json": {
-                  "example": {
-                    "message": "Model retrained successfully."
-                  }
+      "post": {
+        "tags": ["Katalog"],
+        "summary": "Yeni Ürün Ekle",
+        "description": "Kataloga yeni bir ürün ekler",
+        "operationId": "createProduct",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/NewProduct"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Ürün başarıyla oluşturuldu",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Product"
                 }
               }
-            },
-            "500": {
-              "description": "Hata"
+            }
+          },
+          "400": {
+            "description": "Geçersiz istek",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Yetkilendirme hatası",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/katalog/urunler/{productId}": {
+      "get": {
+        "tags": ["Katalog"],
+        "summary": "Ürün Detayları",
+        "description": "Belirli bir ürünün detaylarını getirir",
+        "operationId": "getProductById",
+        "parameters": [
+          {
+            "name": "productId",
+            "in": "path",
+            "description": "Ürün ID",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Başarılı yanıt",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Product"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Ürün bulunamadı",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
             }
           }
         }
       },
-      "/sales_summary": {
-        "get": {
-          "summary": "Satış özeti getir",
-          "description": "Toplam satışları ve en çok satılan ürünü döner.",
-          "responses": {
-            "200": {
-              "description": "Başarılı yanıt",
-              "content": {
-                "application/json": {
-                  "example": {
-                    "total_sales": 12345,
-                    "most_sold_product": "Product X"
-                  }
+      "put": {
+        "tags": ["Katalog"],
+        "summary": "Ürünü Güncelle",
+        "description": "Mevcut bir ürünü günceller",
+        "operationId": "updateProduct",
+        "parameters": [
+          {
+            "name": "productId",
+            "in": "path",
+            "description": "Ürün ID",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Product"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Ürün başarıyla güncellendi",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Product"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Ürün bulunamadı",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/siparis/siparisler": {
+      "get": {
+        "tags": ["Sipariş"],
+        "summary": "Sipariş Listesi",
+        "description": "Tüm siparişlerin listesini getirir",
+        "operationId": "getOrders",
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "Sayfa başına gösterilecek öğe sayısı",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 20
+            }
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "description": "Sayfalama için başlangıç indeksi",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 0
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Başarılı yanıt",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OrderList"
                 }
               }
             }
@@ -136,5 +279,213 @@
         }
       }
     }
-  }
-  
+  },
+  "components": {
+    "schemas": {
+      "Product": {
+        "type": "object",
+        "required": ["id", "name", "price"],
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Ürün benzersiz tanımlayıcısı"
+          },
+          "name": {
+            "type": "string",
+            "description": "Ürün adı"
+          },
+          "description": {
+            "type": "string",
+            "description": "Ürün açıklaması"
+          },
+          "price": {
+            "type": "number",
+            "format": "float",
+            "description": "Ürün fiyatı"
+          },
+          "category": {
+            "type": "string",
+            "description": "Ürün kategorisi"
+          },
+          "stock": {
+            "type": "integer",
+            "description": "Stok miktarı"
+          },
+          "images": {
+            "type": "array",
+            "description": "Ürün görselleri",
+            "items": {
+              "type": "string",
+              "format": "uri"
+            }
+          }
+        }
+      },
+      "NewProduct": {
+        "type": "object",
+        "required": ["name", "price"],
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Ürün adı"
+          },
+          "description": {
+            "type": "string",
+            "description": "Ürün açıklaması"
+          },
+          "price": {
+            "type": "number",
+            "format": "float",
+            "description": "Ürün fiyatı"
+          },
+          "category": {
+            "type": "string",
+            "description": "Ürün kategorisi"
+          },
+          "stock": {
+            "type": "integer",
+            "description": "Stok miktarı"
+          },
+          "images": {
+            "type": "array",
+            "description": "Ürün görselleri",
+            "items": {
+              "type": "string",
+              "format": "uri"
+            }
+          }
+        }
+      },
+      "ProductList": {
+        "type": "object",
+        "properties": {
+          "total": {
+            "type": "integer",
+            "description": "Toplam ürün sayısı"
+          },
+          "limit": {
+            "type": "integer",
+            "description": "Sayfa başına ürün sayısı"
+          },
+          "offset": {
+            "type": "integer",
+            "description": "Sayfalamanın başlangıç indeksi"
+          },
+          "data": {
+            "type": "array",
+            "description": "Ürünler",
+            "items": {
+              "$ref": "#/components/schemas/Product"
+            }
+          }
+        }
+      },
+      "Order": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Sipariş ID"
+          },
+          "customerId": {
+            "type": "string",
+            "description": "Müşteri ID"
+          },
+          "orderDate": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Sipariş tarihi"
+          },
+          "status": {
+            "type": "string",
+            "enum": ["new", "processing", "shipped", "delivered", "cancelled"],
+            "description": "Sipariş durumu"
+          },
+          "items": {
+            "type": "array",
+            "description": "Sipariş kalemleri",
+            "items": {
+              "$ref": "#/components/schemas/OrderItem"
+            }
+          },
+          "totalAmount": {
+            "type": "number",
+            "format": "float",
+            "description": "Toplam sipariş tutarı"
+          }
+        }
+      },
+      "OrderItem": {
+        "type": "object",
+        "properties": {
+          "productId": {
+            "type": "string",
+            "description": "Ürün ID"
+          },
+          "quantity": {
+            "type": "integer",
+            "description": "Miktar"
+          },
+          "price": {
+            "type": "number",
+            "format": "float",
+            "description": "Birim fiyat"
+          }
+        }
+      },
+      "OrderList": {
+        "type": "object",
+        "properties": {
+          "total": {
+            "type": "integer",
+            "description": "Toplam sipariş sayısı"
+          },
+          "limit": {
+            "type": "integer",
+            "description": "Sayfa başına sipariş sayısı"
+          },
+          "offset": {
+            "type": "integer",
+            "description": "Sayfalamanın başlangıç indeksi"
+          },
+          "data": {
+            "type": "array",
+            "description": "Siparişler",
+            "items": {
+              "$ref": "#/components/schemas/Order"
+            }
+          }
+        }
+      },
+      "Error": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string",
+            "description": "Hata kodu"
+          },
+          "message": {
+            "type": "string",
+            "description": "Hata mesajı"
+          },
+          "details": {
+            "type": "object",
+            "description": "Hata detayları"
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "ApiKeyAuth": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "X-API-KEY"
+      }
+    }
+  },
+  "security": [
+    {
+      "ApiKeyAuth": []
+    }
+  ]
+}
