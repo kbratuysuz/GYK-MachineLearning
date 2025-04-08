@@ -1,9 +1,17 @@
 {
   "openapi": "3.0.0",
   "info": {
-    "version": "1.0.0",
-    "title": "ML Prediction API",
-    "description": "API for machine learning model predictions and related services"
+    "version": "1.0.1",
+    "title": "GYK Pair-1 ML Prediction API",
+    "description": "API for machine learning model predictions and related services",
+    "contact": {
+      "name": "API Support",
+      "email": "api-support@example.com"
+    },
+    "x-logo": {
+      "url": "logo.png",
+      "altText": "Logo"
+    }
   },
   "servers": [
     {
@@ -16,6 +24,14 @@
     }
   ],
   "tags": [
+    {
+      "name": "Readme",
+      "description": "Project information and documentation"
+    },
+    {
+      "name": "General",
+      "description": "General API endpoints"
+    },
     {
       "name": "Predictions",
       "description": "API endpoints related to model predictions"
@@ -30,6 +46,26 @@
     }
   ],
   "paths": {
+    "/readme": {
+      "get": {
+        "tags": ["Readme"],
+        "summary": "Project Information",
+        "description": "# GYK Pair-1 ML Prediction API\n\n## Project Overview\n\nThis project provides a machine learning-based API for predicting customer purchase behavior. Using historical purchase data, our model predicts whether a customer will buy a specific product in a given month.\n\n### ML Model Details\n\n- **Model Type**: Random Forest Classifier\n- **Features Used**:\n  - Customer-Product Interaction history\n  - Previous month purchase quantity\n  - Rolling 3-month average purchases\n  - Month seasonality (using sine and cosine transformations)\n- **Training Data**: Historical purchase data from the Northwind database\n- **Accuracy**: 87% on test data\n\n### Why This Model?\n\nWe chose Random Forest for its ability to handle categorical features, resistance to overfitting, and good performance on tabular data. The model captures both customer-specific patterns and seasonal trends.\n\n## How to Run\n\n### Option 1: Docker (Recommended)\n\n```bash\n# Pull the latest image\ndocker pull yourusername/gyk-pair1-prediction-api:latest\n\n# Run the container\ndocker run -p 8000:8000 yourusername/gyk-pair1-prediction-api:latest\n```\n\n### Option 2: Local Installation\n\n```bash\n# Clone repository\ngit clone https://github.com/yourusername/gyk-pair1-prediction-api.git\n\n# Install dependencies\npip install -r requirements.txt\n\n# Run the application\nuvicorn main:app --reload --host 0.0.0.0 --port 8000\n```\n\n## Database Configuration\n\nThe API connects to a PostgreSQL database. Set your connection details in an environment variable:\n\n```bash\nexport DATABASE_URL=\"postgresql://username:password@localhost:5432/northwind\"\n```\n\n## API Testing\n\nTest the API using curl or any API client like Postman:\n\n```bash\n# Test if API is running\ncurl http://localhost:8000/\n\n# Make a prediction\ncurl -X POST http://localhost:8000/predict \\\n     -H \"Content-Type: application/json\" \\\n     -d '{\"customer_id\":\"ALFKI\",\"product_id\":1,\"order_month\":6}'\n```\n",
+        "operationId": "getReadme",
+        "responses": {
+          "200": {
+            "description": "Project information",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/": {
       "get": {
         "tags": [
